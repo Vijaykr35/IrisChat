@@ -132,7 +132,7 @@ npm run dev
 | Backend   | Node.js, Express, MongoDB          |
 | Real-time | Socket.IO                          |
 | Auth      | JWT                                |
-| Emoji     | `emoji-picker-react` (example lib) |
+| Emoji     | `emoji-picker-react`               |
 
 ---
 

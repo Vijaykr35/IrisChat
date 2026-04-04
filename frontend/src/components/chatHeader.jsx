@@ -1,6 +1,5 @@
-import React from 'react'
 import { useSelector } from 'react-redux';
-function chatHeader() {
+function ChatHeader({ darkMode }) {
     const selectedUser = useSelector((store) => store.user.selectedUser);
     const authUser = useSelector((store) => store.user.authUser);
 
@@ -9,17 +8,19 @@ function chatHeader() {
 
     return (
         <div
-            className={`sticky top-0 z-30 px-6 py-4 border-b flex gap-4 items-center backdrop-blur-xl bg-slate-900/70 border-slate-700 shadow-sm transition-colors duration-300`}
+            className={`sticky top-0 z-30 px-4 h-16 flex gap-4 items-center shadow-sm transition-colors duration-300 border-b ${darkMode ? 'bg-[#202c33] border-[#313d45] text-[#e9edef]' : 'bg-[#f0f2f5] border-[#d1d7db] text-[#111b21]'}`}
         >
-
-            <img className='w-12 h-12 rounded-full object-cover' src={selectedUser?.profilePhoto} alt="img" />
+            <img 
+                 className='w-10 h-10 rounded-full object-cover' 
+                 src={selectedUser?.profilePhoto || "https://cdn-icons-png.flaticon.com/512/149/149071.png"} 
+                 alt="img" 
+                 onError={(e) => { e.target.src = "https://cdn-icons-png.flaticon.com/512/149/149071.png" }}
+            />
 
 
             {/* User Info */}
             <div className="flex flex-col flex-grow">
-
-                <h2 className="font-medium  text-white text-lg truncate">{selectedUser?.fullName}</h2>
-
+                <h2 className="font-medium text-lg truncate">{selectedUser?.fullName}</h2>
             </div>
 
 
@@ -28,4 +29,4 @@ function chatHeader() {
     )
 }
 
-export default chatHeader;
+export default ChatHeader;

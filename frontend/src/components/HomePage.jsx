@@ -1,6 +1,6 @@
 import  { useState } from "react";
-import {  FaSun } from "react-icons/fa";
-import { CiDark } from "react-icons/ci";
+import { FiSun, FiMoon, FiLogOut } from "react-icons/fi";
+import { BsChatDotsFill } from "react-icons/bs";
 
 import { LiaSearchSolid } from "react-icons/lia";
 import OtherUsers from "./otherUsers";
@@ -53,54 +53,47 @@ function HomePage() {
 
   return (
     <div
-      className={`min-h-screen ${darkMode ? "bg-gray-900 text-gray-200" : "bg-gray-100 text-gray-900"
+      className={`h-screen overflow-hidden ${darkMode ? "bg-gray-900 text-gray-200" : "bg-gray-100 text-gray-900"
         } flex flex-col`}
     >
       {/* Header */}
       <header
-        className={`p-2 flex justify-between items-center shadow-md  bg-gray-800
-          `}
+        className={`px-6 py-3 flex justify-between items-center ${darkMode ? 'bg-[#202c33] border-b border-[#313d45] text-[#e9edef]' : 'bg-[#f0f2f5] border-b border-[#d1d7db] text-[#111b21]'}`}
       >
-        <img
-          className="w-12 h-12  object-cover"
-          src="/chaatter.png"
-          alt="img"
-        />
+        <div className="flex items-center gap-3 relative group">
+          <div className="w-10 h-10 bg-[#00a884] rounded-xl flex items-center justify-center shadow-[0_0_15px_rgba(0,168,132,0.3)] transition-transform group-hover:scale-105">
+            <BsChatDotsFill className="text-white text-xl" />
+          </div>
+          <h1 className="text-2xl font-bold tracking-tight">Chaatter</h1>
+        </div>
 
-        <h1 className=" text-xl font-bold text-white  text-center ">Chaatter </h1>
-
-
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <button
             onClick={toggleMode}
-            className={`p-3 rounded-full  h-10 w-10 flex items-center justify-center shadow-md transition-all duration-300
-    ${darkMode
-                ? "bg-gray-800 hover:bg-gray-700 text-yellow-400"
-                : "bg-white hover:bg-gray-200 text-gray-800 border"
-              }`}
+            className={`p-2.5 rounded-full transition-all ${darkMode ? 'hover:bg-[#374248] text-[#aebac1]' : 'hover:bg-[#d1d7db] text-[#54656f]'}`}
+            title="Toggle theme"
           >
             {darkMode
-              ? <FaSun className="text-yellow-400 text-2xl" />
-              : <CiDark className="text-gray-800 text-2xl" />
+              ? <FiSun strokeWidth={2.5} className="text-[22px] hover:text-[#00a884]" />
+              : <FiMoon strokeWidth={2.5} className="text-[22px] hover:text-[#00a884]" />
             }
           </button>
 
-
           <button
             onClick={LogoutHandler}
-            className="px-4 py-2 rounded-lg shadow-sm bg-red-800 hover:bg-red-700"
+            className={`p-2.5 ml-1 rounded-full transition-all ${darkMode ? 'hover:bg-[#374248] text-[#aebac1] hover:text-[#f15c6d]' : 'hover:bg-[#d1d7db] text-[#54656f] hover:text-[#f15c6d]'}`}
+            title="Log Out"
           >
-            Log Out
+            <FiLogOut strokeWidth={2.5} className="text-[22px]" />
           </button>
         </div>
       </header>
 
       {/* Main Section */}
-      <div className="flex flex-1">
+      <div className="flex flex-1 overflow-hidden min-h-0">
         {/* Sidebar */}
         <aside
-          className={`w-1/4 ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-200"
-            } shadow-[4px_0_24px_rgba(0,0,0,0.05)] border-r flex flex-col z-10 transition-colors duration-300`}
+          className={`w-[30%] min-w-[300px] border-r border-[#313d45] flex flex-col z-10 transition-colors duration-300 ${darkMode ? 'bg-[#111b21]' : 'bg-white'}`}
         >
           {/* Search Bar */}
           <div
@@ -113,14 +106,11 @@ function HomePage() {
               onChange={(e) => setSearch(e.target.value)}
               type="text"
               placeholder="Search Users..."
-              className={`w-full p-3 rounded-full border-none focus:outline-none focus:ring-2 bg-black/10 backdrop-blur-md ${darkMode
-                ? "text-gray-100 placeholder-gray-400 focus:ring-teal-500"
-                : "text-gray-900 placeholder-gray-500 focus:ring-blue-500"
-                } transition-all duration-300`}
+              className={`w-full p-2 pl-4 rounded-lg border-none focus:outline-none focus:ring-1 focus:ring-[#00a884] ${darkMode ? 'bg-[#202c33] text-[#d1d7db] placeholder-[#8696a0]' : 'bg-[#f0f2f5] text-[#111b21] placeholder-[#667781]'} transition-all`}
             />
             <button
               onClick={searchSubmitHandler}
-              className="p-3 rounded-full bg-gray-600 hover:bg-gray-700 text-white"
+              className={`p-2 ml-2 rounded-full transition-colors ${darkMode ? 'text-[#aebac1] hover:bg-[#202c33]' : 'text-[#54656f] hover:bg-[#e9edef]'}`}
             >
               <LiaSearchSolid size={20} />
             </button>
@@ -132,12 +122,10 @@ function HomePage() {
 
         {/* Chat Area */}
 
-        <main className={`flex-1 flex flex-col relative ${darkMode ? "bg-slate-800" : "bg-slate-50"} transition-colors duration-300 overflow-hidden`}>
+        <main className={`flex-1 flex flex-col relative transition-colors duration-300 overflow-hidden ${darkMode ? 'bg-[#0b141a]' : 'bg-[#efeae2]'}`}>
           <Message darkMode={darkMode} />
         </main>
       </div>
-
-      <SendMessage darkMode={darkMode} />
     </div>
   );
 }

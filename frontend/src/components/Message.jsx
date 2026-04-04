@@ -1,11 +1,12 @@
 import { useEffect, useRef } from 'react';
 import ChatHeader from './chatHeader.jsx';
+import SendMessage from './sendMessage.jsx';
 import { useSelector } from 'react-redux';
 import useGetMessage from '../hooks/useGetMessage.jsx';
 import ChatMessage from './ChatMessage.jsx';
 import useGetRealTimeMessage from '../hooks/useGetRealTimeMessage.jsx';
 
-function Message() {
+function Message({ darkMode }) {
     useGetMessage();
     useGetRealTimeMessage();
 
@@ -21,17 +22,22 @@ function Message() {
     }, [messages]);
 
     return (
-        <div className="h-[calc(100vh-100px)] overflow-y-auto p-4">
-            <ChatHeader className="mb-4 fixed" darkMode={true} />
+        <div className="flex-1 w-full flex flex-col min-h-0 relative">
+            <ChatHeader darkMode={darkMode} />
 
-            {messages?.length > 0 && 
-                messages.map((message) => (
-                    <ChatMessage key={message._id} message={message} />
-                ))
-            }
+            <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 pb-24">
+                {messages?.length > 0 && 
+                    messages.map((message) => (
+                        <ChatMessage key={message._id} message={message} darkMode={darkMode} />
+                    ))
+                }
 
-            {/* Dummy div to scroll into view */}
-            <div ref={messageEndRef} />
+                {/* Dummy div to scroll into view */}
+                <div ref={messageEndRef} />
+            </div>
+
+            {/* Input field firmly anchored to the boundary of Message flex column */}
+            <SendMessage darkMode={darkMode} />
         </div>
     );
 }

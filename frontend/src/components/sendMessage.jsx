@@ -39,15 +39,15 @@ function SendMessage({ darkMode }) {
     };
 
     return (
-        <div className={`fixed bottom-0 right-0 w-3/4 p-6 border-t backdrop-blur-md ${darkMode ? 'bg-slate-900/80 border-slate-800' : 'bg-white/80 border-gray-200'} transition-colors duration-300 z-20`}>
+        <div className={`w-full h-16 px-4 flex items-center sticky bottom-0 border-t transition-colors duration-300 z-20 ${darkMode ? 'bg-[#202c33] border-[#313d45]' : 'bg-[#f0f2f5] border-[#d1d7db]'}`}>
             {showEmojiPicker && (
                 <div className="absolute bottom-16">
                     <EmojiPicker onEmojiClick={onEmojiClick} />
                 </div>
             )}
             {selectedUser && (
-                <form onSubmit={onSubmitHandler} className="flex items-center gap-3">
-                    <button type="button" className={`p-2 rounded-full transition-colors ${darkMode ? 'hover:bg-slate-700 text-slate-300' : 'hover:bg-gray-200 text-gray-500'}`} onClick={() => setShowEmojiPicker(prev => !prev)}>
+                <form onSubmit={onSubmitHandler} className="flex-1 flex items-center gap-3">
+                    <button type="button" className={`p-2 rounded-full transition-colors ${darkMode ? 'text-[#8696a0] hover:bg-[#374248]' : 'text-[#54656f] hover:bg-[#e9edef]'}`} onClick={() => setShowEmojiPicker(prev => !prev)}>
                         <CiFaceSmile size={28} />
                     </button>
 
@@ -55,15 +55,15 @@ function SendMessage({ darkMode }) {
                         onChange={(e) => setMessage(e.target.value)}
                         value={message}
                         type="text"
-                        placeholder="Type a message..."
-                        className={`flex-1 p-4 rounded-3xl border focus:outline-none focus:ring-2 shadow-inner transition-all ${darkMode ? 'bg-slate-800 text-gray-200 border-slate-700 focus:ring-indigo-500' : 'bg-gray-50 text-gray-900 border-gray-300 focus:ring-indigo-500'}`}
+                        placeholder="Type a message"
+                        className={`flex-1 p-2 px-4 rounded-lg border-none focus:outline-none focus:ring-1 focus:ring-[#00a884] transition-colors ${darkMode ? 'bg-[#2a3942] text-[#d1d7db] placeholder-[#8696a0]' : 'bg-[#ffffff] text-[#111b21] placeholder-[#667781]'}`}
                     />
 
                     <button
                         type="submit"
-                        className={`p-4 rounded-full bg-indigo-600 text-white shadow-lg hover:shadow-indigo-500/30 hover:-translate-y-0.5 active:translate-y-0 transition-all`}
+                        className={`p-2 rounded-full transition-all hover:text-[#00a884] ${darkMode ? 'text-[#8696a0] hover:bg-[#374248]' : 'text-[#54656f] hover:bg-[#e9edef]'}`}
                     >
-                        <IoMdSend className='w-6 h-6' />
+                        <IoMdSend className='w-7 h-7' />
                     </button>
                 </form>
             )}

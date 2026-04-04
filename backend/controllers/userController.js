@@ -87,7 +87,7 @@ export async function getOtherUsers(req, res) {
         // console.log(otherUsers);
         return res.status(200).json({ otherUsers });
     }
-    catch {
+    catch (error) {
         console.log(`error in getOtherUsers in userController :: ${error}`);
         return res.status(500).json({ message: "Internal server error", sucess: false });
     }

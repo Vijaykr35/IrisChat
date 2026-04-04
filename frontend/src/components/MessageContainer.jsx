@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import  { useEffect } from 'react';
 import SendMessage from './sendMessage.jsx';
 import Messages from './Mesages.jsx';
 import { useSelector, useDispatch } from "react-redux";
@@ -18,7 +18,7 @@ const MessageContainer = () => {
         return (
             <div className='md:min-w-[550px] flex flex-col justify-center items-center'>
                 <h1 className='text-4xl text-white font-bold'>Hi, {authUser?.fullName}</h1>
-                <h1 className='text-2xl text-white'>Let's start a conversation</h1>
+                <h1 className='text-2xl text-white'>Let&apos;s start a conversation</h1>
             </div>
         );
     }

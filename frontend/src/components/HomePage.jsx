@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { FaClosedCaptioning, FaSun } from "react-icons/fa";
+import  { useState } from "react";
+import {  FaSun } from "react-icons/fa";
 import { CiDark } from "react-icons/ci";
-import { FaRocketchat } from "react-icons/fa";
+
 import { LiaSearchSolid } from "react-icons/lia";
 import OtherUsers from "./otherUsers";
 import Message from "./Message.jsx";
@@ -9,7 +9,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setAuthUser, setOtherUsers, setSelectedUser } from "../redux/userSlice.js";
+import { setAuthUser, setSelectedUser } from "../redux/userSlice.js";
 import SendMessage from './sendMessage.jsx';
 import useAuthRedirect from '../hooks/useAuthRedirect';
 
@@ -37,7 +37,8 @@ function HomePage() {
 
   const LogoutHandler = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/api/v1/user/logout");
+      const BackendURL = "http://localhost:8080/api/v1";
+      const res = await axios.get(`${BackendURL}/user/logout`);
       toast.success(res.data.message || "Logout Successful!");
       dispatch(setAuthUser(null));
       navigate("/login");

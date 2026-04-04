@@ -21,9 +21,11 @@ function Login() {
     e.preventDefault();
 
 
+
+    const BackendURL = "http://localhost:8080/api/v1";
     try {
       const response = await axios.post(
-        'http://localhost:8080/api/v1/user/login',
+        `${BackendURL}/user/login`,
         formData, // Do not stringify
         {
           headers: { 'Content-Type': 'application/json' },
@@ -91,7 +93,7 @@ function Login() {
                 Login
               </button>
             </div>
-            <span className="text-black p-10 text-center">Don't  have an account? <Link className="text-primary" to="/register"><span className="cursor-pointer text-blue-600 hover:underline">SignUp</span></Link></span>
+            <span className="text-black p-10 text-center">Dont  have an account? <Link className="text-primary" to="/register"><span className="cursor-pointer text-blue-600 hover:underline">SignUp</span></Link></span>
           </form>
         </div>
       </div>

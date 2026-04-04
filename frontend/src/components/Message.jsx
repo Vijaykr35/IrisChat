@@ -1,16 +1,16 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import ChatHeader from './chatHeader.jsx';
 import { useSelector } from 'react-redux';
 import useGetMessage from '../hooks/useGetMessage.jsx';
 import ChatMessage from './ChatMessage.jsx';
-import useGetRealTimeMessage from '../hooks/useGetRealTimeMessage.jsx';
+// import useGetRealTimeMessage from '../hooks/useGetRealTimeMessage.jsx';
 
 function Message() {
     useGetMessage();
     // useGetRealTimeMessage();
 
-    const { selectedUser } = useSelector(store => store.user);
-    const authUser = useSelector(store => store.user.authUser);
+    // const { selectedUser } = useSelector(store => store.user);
+    // const authUser = useSelector(store => store.user.authUser);
     const messages = useSelector(store => store.message.messages) || { messages: [] };
 
     const messageEndRef = useRef(null);
@@ -24,9 +24,9 @@ function Message() {
         <div className="h-[calc(100vh-100px)] overflow-y-auto p-4">
             <ChatHeader className="mb-4 fixed" darkMode={true} />
 
-            {messages.messages &&
-                messages.messages.map((msg) => (
-                    <ChatMessage key={msg._id} message={msg} />
+            {messages?.messages?.length > 0 && 
+                messages.messages.map((message) => (
+                    <ChatMessage key={message._id} message={message} />
                 ))
             }
 

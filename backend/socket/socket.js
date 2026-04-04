@@ -1,44 +1,57 @@
-import http from 'http';
-import { Server } from 'socket.io';
 import express from "express";
+import http from "http";
+import { Server } from "socket.io";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 const server = http.createServer(app);
 
-const io = new Server(server, {
-    cors: {
-        origin: ["http://localhost:5173"], // your React frontend URL
-    }
-});
+const frontendUrl = process.env.FRONTENDURL || "http://localhost:3000";
 
+// userId -> socketId
+const userSocketMap = {};
+
+// get receiver socketId
 export const getReceiverSocketId = (receiverId) => {
     return userSocketMap[receiverId];
 };
 
-const userSocketMap = {}; // Map to store user IDs with their corresponding socket IDs
+const io = new Server(server, {
+    cors: {
+        origin: [frontendUrl],
+        methods: ["GET", "POST"],
+    },
+});
 
+// socket connection
 io.on("connection", (socket) => {
     console.log("User connected:", socket.id);
 
-    // You can add socket event handlers here
     const userId = socket.handshake.query.userId;
+
+    // store user socket
     if (userId) {
         userSocketMap[userId] = socket.id;
     }
 
+    // send online users
     io.emit("getOnlineUsers", Object.keys(userSocketMap));
 
+    // disconnect event
     socket.on("disconnect", () => {
         console.log("User disconnected:", socket.id);
 
-        // Remove the user's socket ID from the map when the user disconnects
-        delete userSocketMap[userId];
+        for (const key in userSocketMap) {
+            if (userSocketMap[key] === socket.id) {
+                delete userSocketMap[key];
+                break;
+            }
+        }
+
         io.emit("getOnlineUsers", Object.keys(userSocketMap));
     });
-
 });
 
-server.listen(8000, () => console.log("Socket.IO server running on port 8000")); // ✅ Don't forget this!
 export { app, io, server };
-
-

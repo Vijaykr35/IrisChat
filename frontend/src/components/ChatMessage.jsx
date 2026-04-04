@@ -1,7 +1,13 @@
-import React from 'react'
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable react/prop-types */
+
 import { useSelector } from 'react-redux';
+// eslint-disable-next-line react/prop-types
 export default function ChatMessage({ message }) {
     if (!message) return (<div> start a conversation </div>);
+
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const selectedUser = useSelector((store) => store.user.selectedUser);
     const authUser = useSelector((store) => store.user.authUser);
 
@@ -17,6 +23,7 @@ export default function ChatMessage({ message }) {
                 <time className="text-xs opacity-50 text-gray-500">
                     {new Date(message.createdAt).toLocaleDateString()} ,{new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
                 </time>
+                <span className='bg-red '> {message?.senderId === authUser?._id ? "You" : selectedUser?.name}</span>
             </div>
             <div className={`chat-bubble p-4 ${message?.senderId !== authUser?._id ? 'bg-gray-200 text-black' : 'text-gray-300'} `}>{message?.message}</div>
         </div>

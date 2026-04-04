@@ -1,6 +1,6 @@
 import './App.css'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Homepage from './components/HomePage'
@@ -22,9 +22,10 @@ function App() {
   // const [socket, setSocket] = useState(null);
   const dispatch = useDispatch();
 
+  const sockerUrl='http://localhost:8080';
   useEffect(() => {
     if (authUser) {
-      const socketio = io(`http://localhost:8000`, {
+      const socketio = io(sockerUrl, {
         query: {
           userId: authUser._id
         }

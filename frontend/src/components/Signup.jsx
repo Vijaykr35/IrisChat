@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -24,7 +24,7 @@ function Signup() {
     // Validate formData
     if (!formData.fullName || !formData.username || !formData.password || !formData.gender) {
 
-      alert("All fields are required!");
+      toast.error("All fields are required!");
       return;
     }
 

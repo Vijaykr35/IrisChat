@@ -3,29 +3,29 @@ import ChatHeader from './chatHeader.jsx';
 import { useSelector } from 'react-redux';
 import useGetMessage from '../hooks/useGetMessage.jsx';
 import ChatMessage from './ChatMessage.jsx';
-// import useGetRealTimeMessage from '../hooks/useGetRealTimeMessage.jsx';
+import useGetRealTimeMessage from '../hooks/useGetRealTimeMessage.jsx';
 
 function Message() {
     useGetMessage();
-    // useGetRealTimeMessage();
+    useGetRealTimeMessage();
 
     // const { selectedUser } = useSelector(store => store.user);
     // const authUser = useSelector(store => store.user.authUser);
-    const messages = useSelector(store => store.message.messages) || { messages: [] };
+    const messages = useSelector(store => store.message.messages) || [];
 
     const messageEndRef = useRef(null);
 
     // Scroll to bottom when messages change
     useEffect(() => {
         messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [messages.messages]);
+    }, [messages]);
 
     return (
         <div className="h-[calc(100vh-100px)] overflow-y-auto p-4">
             <ChatHeader className="mb-4 fixed" darkMode={true} />
 
-            {messages?.messages?.length > 0 && 
-                messages.messages.map((message) => (
+            {messages?.length > 0 && 
+                messages.map((message) => (
                     <ChatMessage key={message._id} message={message} />
                 ))
             }

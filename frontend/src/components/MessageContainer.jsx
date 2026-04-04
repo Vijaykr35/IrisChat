@@ -1,6 +1,6 @@
 import  { useEffect } from 'react';
 import SendMessage from './sendMessage.jsx';
-import Messages from './Mesages.jsx';
+import Messages from './Message.jsx';
 import { useSelector, useDispatch } from "react-redux";
 import { setSelectedUser } from '../redux/userSlice';
 

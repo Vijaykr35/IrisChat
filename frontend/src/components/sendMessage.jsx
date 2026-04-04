@@ -13,7 +13,7 @@ function SendMessage({ darkMode }) {
     const dispatch = useDispatch();
     const selectedUser = useSelector(store => store.user.selectedUser);
     const authUser = useSelector(store => store.user.authUser);
-    const messages = useSelector(store => store.message?.messages?.messages || []);
+    const messages = useSelector(store => store.message.messages) || [];
 
     const onEmojiClick = (emojiData) => {
         setMessage(prev => prev + emojiData.emoji);
@@ -31,9 +31,7 @@ function SendMessage({ darkMode }) {
                 { headers: { "Content-Type": "application/json" }, withCredentials: true }
             );
 
-            dispatch(setMessages({
-                messages: [...messages, res?.data?.newMessage]
-            }));
+            dispatch(setMessages([...messages, res?.data?.newMessage]));
             setMessage('');
         } catch (err) {
             console.log(`Error: ${err}`);
@@ -41,7 +39,7 @@ function SendMessage({ darkMode }) {
     };
 
     return (
-        <div className={`fixed bottom-0 right-0 w-[75%] p-4 border-t shadow-md bg-opacity-0 ${darkMode ? 'bg-gray-900 border-gray-700' : 'bg-gray-200 border-gray-300'}`}>
+        <div className={`fixed bottom-0 right-0 w-3/4 p-6 border-t backdrop-blur-md ${darkMode ? 'bg-slate-900/80 border-slate-800' : 'bg-white/80 border-gray-200'} transition-colors duration-300 z-20`}>
             {showEmojiPicker && (
                 <div className="absolute bottom-16">
                     <EmojiPicker onEmojiClick={onEmojiClick} />
@@ -49,8 +47,8 @@ function SendMessage({ darkMode }) {
             )}
             {selectedUser && (
                 <form onSubmit={onSubmitHandler} className="flex items-center gap-3">
-                    <button type="button" onClick={() => setShowEmojiPicker(prev => !prev)}>
-                        <CiFaceSmile size={24} />
+                    <button type="button" className={`p-2 rounded-full transition-colors ${darkMode ? 'hover:bg-slate-700 text-slate-300' : 'hover:bg-gray-200 text-gray-500'}`} onClick={() => setShowEmojiPicker(prev => !prev)}>
+                        <CiFaceSmile size={28} />
                     </button>
 
                     <input
@@ -58,16 +56,14 @@ function SendMessage({ darkMode }) {
                         value={message}
                         type="text"
                         placeholder="Type a message..."
-                        className={`flex-1 p-3 rounded-full border focus:outline-none focus:ring-2 ${darkMode ? 'bg-gray-800 text-gray-200 border-gray-700 focus:ring-teal-500' : 'bg-gray-100 text-gray-900 border-gray-400 focus:ring-blue-500'}`}
+                        className={`flex-1 p-4 rounded-3xl border focus:outline-none focus:ring-2 shadow-inner transition-all ${darkMode ? 'bg-slate-800 text-gray-200 border-slate-700 focus:ring-indigo-500' : 'bg-gray-50 text-gray-900 border-gray-300 focus:ring-indigo-500'}`}
                     />
 
                     <button
                         type="submit"
-                        className={`px-4 py-2 rounded-full opacity-100 hover:opacity-50`}
-
+                        className={`p-4 rounded-full bg-indigo-600 text-white shadow-lg hover:shadow-indigo-500/30 hover:-translate-y-0.5 active:translate-y-0 transition-all`}
                     >
-
-                        <IoMdSend className='h-[2%] w-5' />
+                        <IoMdSend className='w-6 h-6' />
                     </button>
                 </form>
             )}

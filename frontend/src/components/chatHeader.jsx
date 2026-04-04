@@ -9,8 +9,7 @@ function chatHeader() {
 
     return (
         <div
-            className={` p-4 border-b flex gap-4 items-cente bg-[#243642] border-white border-900
-                `}
+            className={`sticky top-0 z-30 px-6 py-4 border-b flex gap-4 items-center backdrop-blur-xl bg-slate-900/70 border-slate-700 shadow-sm transition-colors duration-300`}
         >
 
             <img className='w-12 h-12 rounded-full object-cover' src={selectedUser?.profilePhoto} alt="img" />

@@ -99,8 +99,8 @@ function HomePage() {
       <div className="flex flex-1">
         {/* Sidebar */}
         <aside
-          className={`w-1/4 ${darkMode ? "bg-gray-800 border-gray-700" : "bg-gray-200 border-gray-300"
-            } shadow-lg border-r`}
+          className={`w-1/4 ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-200"
+            } shadow-[4px_0_24px_rgba(0,0,0,0.05)] border-r flex flex-col z-10 transition-colors duration-300`}
         >
           {/* Search Bar */}
           <div
@@ -113,10 +113,10 @@ function HomePage() {
               onChange={(e) => setSearch(e.target.value)}
               type="text"
               placeholder="Search Users..."
-              className={`w-full p-3 rounded-full border focus:outline-none focus:ring-2 ${darkMode
-                ? "bg-gray-700 text-gray-200 border-gray-600 focus:ring-teal-500"
-                : "bg-gray-100 text-gray-900 border-gray-400 focus:ring-blue-500"
-                }`}
+              className={`w-full p-3 rounded-full border-none focus:outline-none focus:ring-2 bg-black/10 backdrop-blur-md ${darkMode
+                ? "text-gray-100 placeholder-gray-400 focus:ring-teal-500"
+                : "text-gray-900 placeholder-gray-500 focus:ring-blue-500"
+                } transition-all duration-300`}
             />
             <button
               onClick={searchSubmitHandler}
@@ -132,7 +132,7 @@ function HomePage() {
 
         {/* Chat Area */}
 
-        <main className={`flex-1 flex flex-col ${darkMode ? "bg-gray-800" : "bg-gray-100"}`}>
+        <main className={`flex-1 flex flex-col relative ${darkMode ? "bg-slate-800" : "bg-slate-50"} transition-colors duration-300 overflow-hidden`}>
           <Message darkMode={darkMode} />
         </main>
       </div>

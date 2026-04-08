@@ -13,9 +13,9 @@ function useGetMessage() {
 
             try {
                 axios.defaults.withCredentials = true;
-                const res = await axios.get(`http://localhost:8080/api/v1/message/${selectedUser._id}`);
-                console.log("Fetched messages:", res.data);
-                dispatch(setMessages(res.data));
+                const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/message/${selectedUser._id}`);
+                
+                dispatch(setMessages(res.data.messages));
             } catch (error) {
                 console.error("Error fetching messages:", error);
             }

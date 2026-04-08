@@ -9,7 +9,7 @@ function useGetOtherUsers() {
     useEffect(() => {
         const fetchOtherUsers = async () => {
             try {
-                const res = await axios.get('http://localhost:8080/api/v1/user/', {
+                const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/user/`, {
                     withCredentials: true,
                     headers: {
                         'Content-Type': 'application/json'

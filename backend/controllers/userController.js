@@ -87,8 +87,57 @@ export async function getOtherUsers(req, res) {
         // console.log(otherUsers);
         return res.status(200).json({ otherUsers });
     }
-    catch {
+    catch (error) {
         console.log(`error in getOtherUsers in userController :: ${error}`);
         return res.status(500).json({ message: "Internal server error", sucess: false });
+    }
+}
+
+export async function updateProfile(req, res) {
+    try {
+        const userId = req.id; // defined in isAuthenticated middleware
+        const { profilePhoto, username } = req.body;
+        
+        let updateData = {};
+        if (profilePhoto) updateData.profilePhoto = profilePhoto;
+        
+        if (username) {
+            // Ensure no one else has this username
+            const existingUser = await User.findOne({ username, _id: { $ne: userId } });
+            if (existingUser) {
+                return res.status(400).json({ message: "Username already taken", success: false });
+            }
+            updateData.username = username;
+        }
+
+        if (Object.keys(updateData).length === 0) {
+            return res.status(400).json({ message: "No data provided to update", success: false });
+        }
+
+        const user = await User.findByIdAndUpdate(
+            userId,
+            updateData,
+            { new: true }
+        ).select("-password");
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found", success: false });
+        }
+
+        return res.status(200).json({ 
+            message: "Profile updated successfully", 
+            success: true,
+            user: {
+                _id: user._id,
+                fullName: user.fullName,
+                username: user.username,
+                profilePhoto: user.profilePhoto,
+                gender: user.gender
+            }
+        });
+
+    } catch (error) {
+        console.log(`error in updateProfile in userController :: ${error}`);
+        return res.status(500).json({ message: "Internal server error", success: false });
     }
 }

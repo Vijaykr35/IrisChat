@@ -1,6 +1,6 @@
 import './App.css'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Homepage from './components/HomePage'
@@ -22,18 +22,19 @@ function App() {
   // const [socket, setSocket] = useState(null);
   const dispatch = useDispatch();
 
+  const sockerUrl=import.meta.env.VITE_SOCKET_URL || 'http://localhost:8080';
   useEffect(() => {
     if (authUser) {
-      const socketio = io(`http://localhost:8000`, {
+      const socketio = io(sockerUrl, {
         query: {
           userId: authUser._id
         }
       });
-      console.log("socketio", socketio);
+      
       dispatch(setSocket(socketio));
 
       socketio?.on('getOnlineUsers', (onlineUsers) => {
-        console.log("onlineUsers", onlineUsers);
+        
         dispatch(setOnlineUsers(onlineUsers));
       });
       return () => socketio.close();

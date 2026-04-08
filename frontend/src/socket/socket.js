@@ -1,6 +1,11 @@
-import {io} from "socket.io-client";
+import { io } from "socket.io-client";
 
-const socket = io("http://localhost:8080"); //backend port
+const currentUser = JSON.parse(localStorage.getItem("user"));
 
+const socket = io(import.meta.env.VITE_SOCKET_URL || "http://localhost:8080", {
+    query: {
+        userId: localStorage.getItem("userId") || currentUser._id
+    }
+});
 
 export default socket;

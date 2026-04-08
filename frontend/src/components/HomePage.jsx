@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { FaClosedCaptioning, FaSun } from "react-icons/fa";
-import { CiDark } from "react-icons/ci";
-import { FaRocketchat } from "react-icons/fa";
+import  { useState } from "react";
+import { FiSun, FiMoon, FiLogOut, FiUser } from "react-icons/fi";
+import { BsChatDotsFill } from "react-icons/bs";
+import ProfileModal from "./ProfileModal.jsx";
+
 import { LiaSearchSolid } from "react-icons/lia";
 import OtherUsers from "./otherUsers";
 import Message from "./Message.jsx";
@@ -9,21 +10,22 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setAuthUser, setOtherUsers, setSelectedUser } from "../redux/userSlice.js";
+import { setAuthUser, setSelectedUser } from "../redux/userSlice.js";
 import SendMessage from './sendMessage.jsx';
 import useAuthRedirect from '../hooks/useAuthRedirect';
 
 function HomePage() {
   useAuthRedirect();
   const [darkMode, setDarkMode] = useState(true);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [search, setSearch] = useState("");
   const { otherUsers } = useSelector((store) => store.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const searchSubmitHandler = (e) => {
     e.preventDefault();
-    console.log(`otherUsers from home page line No 22: ${otherUsers}`);
-    console.log(`search from home page line No 23: ${search}`);
+
+
     const conversationUser = (otherUsers.otherUsers.find((user) => user.username.toLowerCase().includes(search.toLowerCase())));
 
     // const conversationUser = otherUsers?.otherUsers?.find((user) => user.username.toLowerCase().includes(search.toLowerCase()));
@@ -37,12 +39,13 @@ function HomePage() {
 
   const LogoutHandler = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/api/v1/user/logout");
+      const BackendURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080/api/v1";
+      const res = await axios.get(`${BackendURL}/user/logout`);
       toast.success(res.data.message || "Logout Successful!");
       dispatch(setAuthUser(null));
       navigate("/login");
     } catch (error) {
-      console.log(`Error in logout: ${error}`);
+      console.error(`Error in logout: ${error}`);
     }
   };
 
@@ -52,54 +55,55 @@ function HomePage() {
 
   return (
     <div
-      className={`min-h-screen ${darkMode ? "bg-gray-900 text-gray-200" : "bg-gray-100 text-gray-900"
+      className={`h-screen overflow-hidden ${darkMode ? "bg-gray-900 text-gray-200" : "bg-gray-100 text-gray-900"
         } flex flex-col`}
     >
       {/* Header */}
       <header
-        className={`p-2 flex justify-between items-center shadow-md  bg-gray-800
-          `}
+        className={`px-6 py-3 flex justify-between items-center ${darkMode ? 'bg-[#202c33] border-b border-[#313d45] text-[#e9edef]' : 'bg-[#f0f2f5] border-b border-[#d1d7db] text-[#111b21]'}`}
       >
-        <img
-          className="w-12 h-12  object-cover"
-          src="/chaatter.png"
-          alt="img"
-        />
+        <div className="flex items-center gap-3 relative group">
+          <div className="w-10 h-10 bg-[#00a884] rounded-xl flex items-center justify-center shadow-[0_0_15px_rgba(0,168,132,0.3)] transition-transform group-hover:scale-105">
+            <BsChatDotsFill className="text-white text-xl" />
+          </div>
+          <h1 className="text-2xl font-bold tracking-tight">Chaatter</h1>
+        </div>
 
-        <h1 className=" text-xl font-bold text-white  text-center ">Chaatter </h1>
-
-
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <button
             onClick={toggleMode}
-            className={`p-3 rounded-full  h-10 w-10 flex items-center justify-center shadow-md transition-all duration-300
-    ${darkMode
-                ? "bg-gray-800 hover:bg-gray-700 text-yellow-400"
-                : "bg-white hover:bg-gray-200 text-gray-800 border"
-              }`}
+            className={`p-2.5 rounded-full transition-all ${darkMode ? 'hover:bg-[#374248] text-[#aebac1]' : 'hover:bg-[#d1d7db] text-[#54656f]'}`}
+            title="Toggle theme"
           >
             {darkMode
-              ? <FaSun className="text-yellow-400 text-2xl" />
-              : <CiDark className="text-gray-800 text-2xl" />
+              ? <FiSun strokeWidth={2.5} className="text-[22px] hover:text-[#00a884]" />
+              : <FiMoon strokeWidth={2.5} className="text-[22px] hover:text-[#00a884]" />
             }
           </button>
 
+          <button
+            onClick={() => setIsProfileOpen(true)}
+            className={`p-2.5 rounded-full transition-all ${darkMode ? 'hover:bg-[#374248] text-[#aebac1]' : 'hover:bg-[#d1d7db] text-[#54656f]'}`}
+            title="Update Profile"
+          >
+            <FiUser strokeWidth={2.5} className="text-[22px] hover:text-[#00a884]" />
+          </button>
 
           <button
             onClick={LogoutHandler}
-            className="px-4 py-2 rounded-lg shadow-sm bg-red-800 hover:bg-red-700"
+            className={`p-2.5 ml-1 rounded-full transition-all ${darkMode ? 'hover:bg-[#374248] text-[#aebac1] hover:text-[#f15c6d]' : 'hover:bg-[#d1d7db] text-[#54656f] hover:text-[#f15c6d]'}`}
+            title="Log Out"
           >
-            Log Out
+            <FiLogOut strokeWidth={2.5} className="text-[22px]" />
           </button>
         </div>
       </header>
 
       {/* Main Section */}
-      <div className="flex flex-1">
+      <div className="flex flex-1 overflow-hidden min-h-0">
         {/* Sidebar */}
         <aside
-          className={`w-1/4 ${darkMode ? "bg-gray-800 border-gray-700" : "bg-gray-200 border-gray-300"
-            } shadow-lg border-r`}
+          className={`w-[30%] min-w-[300px] border-r border-[#313d45] flex flex-col z-10 transition-colors duration-300 ${darkMode ? 'bg-[#111b21]' : 'bg-white'}`}
         >
           {/* Search Bar */}
           <div
@@ -112,14 +116,11 @@ function HomePage() {
               onChange={(e) => setSearch(e.target.value)}
               type="text"
               placeholder="Search Users..."
-              className={`w-full p-3 rounded-full border focus:outline-none focus:ring-2 ${darkMode
-                ? "bg-gray-700 text-gray-200 border-gray-600 focus:ring-teal-500"
-                : "bg-gray-100 text-gray-900 border-gray-400 focus:ring-blue-500"
-                }`}
+              className={`w-full p-2 pl-4 rounded-lg border-none focus:outline-none focus:ring-1 focus:ring-[#00a884] ${darkMode ? 'bg-[#202c33] text-[#d1d7db] placeholder-[#8696a0]' : 'bg-[#f0f2f5] text-[#111b21] placeholder-[#667781]'} transition-all`}
             />
             <button
               onClick={searchSubmitHandler}
-              className="p-3 rounded-full bg-gray-600 hover:bg-gray-700 text-white"
+              className={`p-2 ml-2 rounded-full transition-colors ${darkMode ? 'text-[#aebac1] hover:bg-[#202c33]' : 'text-[#54656f] hover:bg-[#e9edef]'}`}
             >
               <LiaSearchSolid size={20} />
             </button>
@@ -131,12 +132,16 @@ function HomePage() {
 
         {/* Chat Area */}
 
-        <main className={`flex-1 flex flex-col ${darkMode ? "bg-gray-800" : "bg-gray-100"}`}>
+        <main className={`flex-1 flex flex-col relative transition-colors duration-300 overflow-hidden ${darkMode ? 'bg-[#0b141a]' : 'bg-[#efeae2]'}`}>
           <Message darkMode={darkMode} />
         </main>
       </div>
 
-      <SendMessage darkMode={darkMode} />
+      <ProfileModal
+        isOpen={isProfileOpen}
+        onClose={() => setIsProfileOpen(false)}
+        darkMode={darkMode}
+      />
     </div>
   );
 }

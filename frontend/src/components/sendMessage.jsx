@@ -13,7 +13,7 @@ function SendMessage({ darkMode }) {
     const dispatch = useDispatch();
     const selectedUser = useSelector(store => store.user.selectedUser);
     const authUser = useSelector(store => store.user.authUser);
-    const messages = useSelector(store => store.message?.messages?.messages || []);
+    const messages = useSelector(store => store.message.messages) || [];
 
     const onEmojiClick = (emojiData) => {
         setMessage(prev => prev + emojiData.emoji);
@@ -26,48 +26,44 @@ function SendMessage({ darkMode }) {
 
         try {
             const res = await axios.post(
-                `http://localhost:8080/api/v1/message/send/${selectedUser._id}`,
+                `${import.meta.env.VITE_BACKEND_URL}/message/send/${selectedUser._id}`,
                 { message },
                 { headers: { "Content-Type": "application/json" }, withCredentials: true }
             );
 
-            dispatch(setMessages({
-                messages: [...messages, res?.data?.newMessage]
-            }));
+            dispatch(setMessages([...messages, res?.data?.newMessage]));
             setMessage('');
         } catch (err) {
-            console.log(`Error: ${err}`);
+            console.error(`Error: ${err}`);
         }
     };
 
     return (
-        <div className={`fixed bottom-0 right-0 w-[75%] p-4 border-t shadow-md bg-opacity-0 ${darkMode ? 'bg-gray-900 border-gray-700' : 'bg-gray-200 border-gray-300'}`}>
+        <div className={`w-full h-16 px-4 flex items-center sticky bottom-0 border-t transition-colors duration-300 z-20 ${darkMode ? 'bg-[#202c33] border-[#313d45]' : 'bg-[#f0f2f5] border-[#d1d7db]'}`}>
             {showEmojiPicker && (
                 <div className="absolute bottom-16">
                     <EmojiPicker onEmojiClick={onEmojiClick} />
                 </div>
             )}
             {selectedUser && (
-                <form onSubmit={onSubmitHandler} className="flex items-center gap-3">
-                    <button type="button" onClick={() => setShowEmojiPicker(prev => !prev)}>
-                        <CiFaceSmile size={24} />
+                <form onSubmit={onSubmitHandler} className="flex-1 flex items-center gap-3">
+                    <button type="button" className={`p-2 rounded-full transition-colors ${darkMode ? 'text-[#8696a0] hover:bg-[#374248]' : 'text-[#54656f] hover:bg-[#e9edef]'}`} onClick={() => setShowEmojiPicker(prev => !prev)}>
+                        <CiFaceSmile size={28} />
                     </button>
 
                     <input
                         onChange={(e) => setMessage(e.target.value)}
                         value={message}
                         type="text"
-                        placeholder="Type a message..."
-                        className={`flex-1 p-3 rounded-full border focus:outline-none focus:ring-2 ${darkMode ? 'bg-gray-800 text-gray-200 border-gray-700 focus:ring-teal-500' : 'bg-gray-100 text-gray-900 border-gray-400 focus:ring-blue-500'}`}
+                        placeholder="Type a message"
+                        className={`flex-1 p-2 px-4 rounded-lg border-none focus:outline-none focus:ring-1 focus:ring-[#00a884] transition-colors ${darkMode ? 'bg-[#2a3942] text-[#d1d7db] placeholder-[#8696a0]' : 'bg-[#ffffff] text-[#111b21] placeholder-[#667781]'}`}
                     />
 
                     <button
                         type="submit"
-                        className={`px-4 py-2 rounded-full opacity-100 hover:opacity-50`}
-
+                        className={`p-2 rounded-full transition-all hover:text-[#00a884] ${darkMode ? 'text-[#8696a0] hover:bg-[#374248]' : 'text-[#54656f] hover:bg-[#e9edef]'}`}
                     >
-
-                        <IoMdSend className='h-[2%] w-5' />
+                        <IoMdSend className='w-7 h-7' />
                     </button>
                 </form>
             )}

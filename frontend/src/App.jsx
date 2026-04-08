@@ -22,7 +22,7 @@ function App() {
   // const [socket, setSocket] = useState(null);
   const dispatch = useDispatch();
 
-  const sockerUrl='http://localhost:8080';
+  const sockerUrl=import.meta.env.VITE_SOCKET_URL || 'http://localhost:8080';
   useEffect(() => {
     if (authUser) {
       const socketio = io(sockerUrl, {
@@ -30,11 +30,11 @@ function App() {
           userId: authUser._id
         }
       });
-      console.log("socketio", socketio);
+      
       dispatch(setSocket(socketio));
 
       socketio?.on('getOnlineUsers', (onlineUsers) => {
-        console.log("onlineUsers", onlineUsers);
+        
         dispatch(setOnlineUsers(onlineUsers));
       });
       return () => socketio.close();

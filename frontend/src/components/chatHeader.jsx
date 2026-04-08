@@ -20,7 +20,7 @@ function ChatHeader({ darkMode }) {
 
             {/* User Info */}
             <div className="flex flex-col flex-grow">
-                <h2 className="font-medium text-lg truncate">{selectedUser?.fullName}</h2>
+                <h2 className="font-medium text-lg truncate">{selectedUser?.username}</h2>
             </div>
 
 

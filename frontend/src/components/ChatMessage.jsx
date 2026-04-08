@@ -15,7 +15,7 @@ export default function ChatMessage({ message, darkMode }) {
 
         <div className={`chat ${message?.senderId === authUser?._id ? 'chat-end' : 'chat-start'}`}>
             <div className="chat-header mb-1 opacity-70">
-                <span className='font-medium text-sm'>{message?.senderId === authUser?._id ? "You" : selectedUser?.fullName}</span>
+                <span className='font-medium text-sm'>{message?.senderId === authUser?._id ? "You" : selectedUser?.username}</span>
                 <time className="text-xs ml-2 opacity-50">
                     {new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
                 </time>

@@ -26,7 +26,7 @@ function SendMessage({ darkMode }) {
 
         try {
             const res = await axios.post(
-                `http://localhost:8080/api/v1/message/send/${selectedUser._id}`,
+                `${import.meta.env.VITE_BACKEND_URL}/message/send/${selectedUser._id}`,
                 { message },
                 { headers: { "Content-Type": "application/json" }, withCredentials: true }
             );
@@ -34,7 +34,7 @@ function SendMessage({ darkMode }) {
             dispatch(setMessages([...messages, res?.data?.newMessage]));
             setMessage('');
         } catch (err) {
-            console.log(`Error: ${err}`);
+            console.error(`Error: ${err}`);
         }
     };
 

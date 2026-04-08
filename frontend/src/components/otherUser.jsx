@@ -10,7 +10,7 @@ function OtherUser({ user, darkMode }) {
     const isOnline = onlineUsers?.some(
         (onlineUser) => onlineUser === user._id
     );
-    console.log("online user is ", isOnline);
+    
 
     const handleSelectUser = () => {
         dispatch(setSelectedUser(user));
@@ -38,7 +38,7 @@ function OtherUser({ user, darkMode }) {
                 )}
             </div>
             <div className="flex-1">
-                <h3 className="font-medium">{user.fullName}</h3>
+                <h3 className="font-medium">{user.username}</h3>
             </div>
         </div>
     );

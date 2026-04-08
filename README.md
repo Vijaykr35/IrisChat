@@ -1,24 +1,23 @@
+# Chatter - Real-Time Chat Application
 
-# 💬 Chatter - Real-Time Chat App
-
-A full-stack modern **real-time chat application** with **emoji support**, built using **React**, **Node.js**, **Express**, and **Socket.IO**.
-
----
-
-## 🚀 Features
-
-* ⚡ Real-time messaging with **Socket.IO**
-* 😀 **Emoji** picker integration
-* 🔐 User **authentication** (JWT)
-* 💬 One-on-one & group messaging support
-* 🧠 State management using **Redux**
-* 🌈 Clean, responsive UI with **TailwindCSS**
-* 🌐 REST API using **Express + MongoDB**
-* 📡 Auto socket reconnect on disconnect
+A full-stack, modern real-time chat application built utilizing React, Node.js, Express, and Socket.IO.
 
 ---
 
-## 🗂️ Folder Structure
+## Features
+
+* **Real-Time Messaging:** Instantaneous event-driven communication powered by Socket.IO.
+* **Emoji Integration:** Comprehensive emoji picker support for richer user interactions.
+* **Secure Authentication:** JWT-based user authentication and secure routing.
+* **Versatile Chat Options:** Built-in support for one-on-one and group messaging.
+* **State Management:** Robust, centralized frontend data handling using Redux.
+* **Modern UI:** Clean, responsive, and themeable interface constructed with TailwindCSS.
+* **Scalable Backend:** RESTful API architecture structured with Express.js and MongoDB.
+* **Connection Resilience:** Automatic socket reconnection handling on network drops.
+
+---
+
+## Folder Structure
 
 ```
 chatter/
@@ -73,67 +72,67 @@ chatter/
 │   ├── vite.config.js
 │   ├── eslint.config.js
 │   └── README.md
-
 ```
 
 ---
 
-## 🔧 Installation
+## Installation
 
 ```bash
-# Clone the project
+# Clone the repository
 git clone https://github.com/Vijaykr35/chatapp.git
 cd Chatter
 
-# Backend setup
+# Backend Setup
 cd backend
 npm install
-cp .env.example .env  # Fill in Mongo URI, JWT_SECRET
+cp .env.example .env  # Ensure Mongo URI, JWT_SECRET, and PORT are configured
 npm start
 
-# Frontend setup
+# Frontend Setup
 cd ../frontend
 npm install
+# Configure environment routing parameters
+echo "VITE_BACKEND_URL=http://localhost:8080/api/v1" > .env
+echo "VITE_SOCKET_URL=http://localhost:8080" >> .env
 npm run dev
 ```
 
 ---
 
-## 🧪 Example Usage
+## Example Usage
 
-* 🔐 Register & login users
-* 💬 Start chatting instantly
-* 😄 Use emoji picker to send expressive messages
-* 🌐 All updates sync in **real-time** with **Socket.IO**
-
----
-
-## 📸 Screenshots
-
-| Login Page
-| -------------------------------------
-| ![Login](frontend/public/image.png) |
-| Signup
-| -------------------------------------|
-| ![Signup](frontend/public/signup.png) |
-
-| Chat UI                         |
-| ------------------------------- |
- ![Chat](frontend/public/chat.png) |
- ![lightMode](frontend/public/lightMode.png)
+* Register a new account or authenticate an existing user session.
+* Initiate one-on-one discussions seamlessly.
+* Utilize the integrated emoji picker to enhance message expression.
+* Experience immediate, real-time message synchronization universally via Socket.IO.
 
 ---
 
-## 🛠️ Tech Stack
+## Screenshots
+
+| Login Page | Signup |
+| :---: | :---: |
+| ![Login](frontend/public/image.png) | ![Signup](frontend/public/signup.png) |
+
+| Chat UI (Dark Mode) | Chat UI (Light Mode) |
+| :---: | :---: |
+| ![Chat](frontend/public/chat.png) | ![lightMode](frontend/public/lightMode.png) |
+
+---
+
+## Tech Stack
 
 | Layer     | Technology                         |
 | --------- | ---------------------------------- |
 | Frontend  | React, TailwindCSS, Redux, Vite    |
 | Backend   | Node.js, Express, MongoDB          |
-| Real-time | Socket.IO                          |
-| Auth      | JWT                                |
-| Emoji     | `emoji-picker-react`               |
+| Real-Time | Socket.IO                          |
+| Auth      | JSON Web Tokens (JWT)              |
+| Utilities | `emoji-picker-react`               |
 
 ---
 
-## @VijayKumar
+## Maintainer
+
+**Vijay Kumar**

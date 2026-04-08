@@ -1,6 +1,7 @@
 import  { useState } from "react";
-import { FiSun, FiMoon, FiLogOut } from "react-icons/fi";
+import { FiSun, FiMoon, FiLogOut, FiUser } from "react-icons/fi";
 import { BsChatDotsFill } from "react-icons/bs";
+import ProfileModal from "./ProfileModal.jsx";
 
 import { LiaSearchSolid } from "react-icons/lia";
 import OtherUsers from "./otherUsers";
@@ -16,14 +17,15 @@ import useAuthRedirect from '../hooks/useAuthRedirect';
 function HomePage() {
   useAuthRedirect();
   const [darkMode, setDarkMode] = useState(true);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [search, setSearch] = useState("");
   const { otherUsers } = useSelector((store) => store.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const searchSubmitHandler = (e) => {
     e.preventDefault();
-    console.log(`otherUsers from home page line No 22: ${otherUsers}`);
-    console.log(`search from home page line No 23: ${search}`);
+
+
     const conversationUser = (otherUsers.otherUsers.find((user) => user.username.toLowerCase().includes(search.toLowerCase())));
 
     // const conversationUser = otherUsers?.otherUsers?.find((user) => user.username.toLowerCase().includes(search.toLowerCase()));
@@ -37,13 +39,13 @@ function HomePage() {
 
   const LogoutHandler = async () => {
     try {
-      const BackendURL = "http://localhost:8080/api/v1";
+      const BackendURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080/api/v1";
       const res = await axios.get(`${BackendURL}/user/logout`);
       toast.success(res.data.message || "Logout Successful!");
       dispatch(setAuthUser(null));
       navigate("/login");
     } catch (error) {
-      console.log(`Error in logout: ${error}`);
+      console.error(`Error in logout: ${error}`);
     }
   };
 
@@ -77,6 +79,14 @@ function HomePage() {
               ? <FiSun strokeWidth={2.5} className="text-[22px] hover:text-[#00a884]" />
               : <FiMoon strokeWidth={2.5} className="text-[22px] hover:text-[#00a884]" />
             }
+          </button>
+
+          <button
+            onClick={() => setIsProfileOpen(true)}
+            className={`p-2.5 rounded-full transition-all ${darkMode ? 'hover:bg-[#374248] text-[#aebac1]' : 'hover:bg-[#d1d7db] text-[#54656f]'}`}
+            title="Update Profile"
+          >
+            <FiUser strokeWidth={2.5} className="text-[22px] hover:text-[#00a884]" />
           </button>
 
           <button
@@ -126,6 +136,12 @@ function HomePage() {
           <Message darkMode={darkMode} />
         </main>
       </div>
+
+      <ProfileModal
+        isOpen={isProfileOpen}
+        onClose={() => setIsProfileOpen(false)}
+        darkMode={darkMode}
+      />
     </div>
   );
 }

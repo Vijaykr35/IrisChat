@@ -14,8 +14,8 @@ const PORT = process.env.PORT || 3000;
 //middlewares
 const FrontendUrl="http://localhost:5173"
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
 const corsOptions = {
     origin: FrontendUrl,
@@ -29,5 +29,5 @@ app.use("/api/v1/user", userRoute);
 app.use("/api/v1/message", messageRoute);
 server.listen(PORT, () => {
     connectDB();
-    console.log("server started at port", PORT);
+    // console.log("server started at port", PORT);
 });

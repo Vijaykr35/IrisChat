@@ -1,0 +1,11 @@
+# Logs and caches
+node_modules/
+dist/
+.DS_Store
+
+# Environments
+.env
+
+# Antigravity artifacts & brag launch videos
+brag-output/
+skills-lock.json

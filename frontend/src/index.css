@@ -2,32 +2,84 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    background-image: url(/bg.jpg);
-    background-size: cover;
-    background-attachment: fixed;
-    background-blend-mode: overlay;
-    background-repeat: no-repeat;
-    background-position: center;
+    background-color: #0b141a;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
-/* width */
+/* Custom Sleek Scrollbar */
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 6px;
+    height: 6px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: transparent;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 5px;
+    background: rgba(134, 150, 160, 0.28);
+    border-radius: 9999px;
+    transition: background-color 0.2s ease;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: #00a884;
+}
+
+/* Smooth Message Bubble Entrance Animation */
+@keyframes messageEntrance {
+    0% {
+        opacity: 0;
+        transform: translateY(10px) scale(0.97);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.animate-message {
+    animation: messageEntrance 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Subtle Pulse Glow */
+@keyframes glowPulse {
+    0%, 100% {
+        opacity: 0.15;
+    }
+    50% {
+        opacity: 0.3;
+    }
+}
+
+.animate-doodle {
+    animation: glowPulse 6s ease-in-out infinite alternate;
+}
+
+/* Subtle architectural dot grid */
+.bg-grid-pattern {
+    background-size: 28px 28px;
+    background-image: 
+        radial-gradient(circle, #cbd5e1 1.1px, transparent 1.1px);
+}
+
+/* Floating animated ambient pills */
+@keyframes floatSubtle {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-8px) rotate(1deg);
+    }
+}
+
+.animate-float-subtle {
+    animation: floatSubtle 7s ease-in-out infinite;
 }

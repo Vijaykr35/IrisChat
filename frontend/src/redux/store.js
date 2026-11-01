@@ -2,6 +2,8 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import userReducer from "./userSlice.js";
 import messageReducer from "./messageSlice.js";
 import socketReducer from "./socketSlice.js";
+import groupReducer from "./groupSlice.js";
+import aiReducer from "./aiSlice.js";
 import {
     persistReducer,
     FLUSH,
@@ -17,13 +19,15 @@ const persistConfig = {
     key: 'root',
     version: 1,
     storage,
-    blacklist: ['socket'],
+    blacklist: ['socket', 'message', 'group', 'ai'],
 }
 
 const rootReducer = combineReducers({
     user: userReducer,
     message: messageReducer,
-    socket: socketReducer
+    socket: socketReducer,
+    group: groupReducer,
+    ai: aiReducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

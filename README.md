@@ -27,6 +27,38 @@
 
 ---
 
+## 📸 Application Preview
+
+### 🏠 Landing Page
+A modern, minimal front page welcoming new users with feature highlights and a live interactive product mockup.
+
+<p align="center">
+  <img src="screenshots/landing-page.png" width="100%" alt="IrisChat Landing Page" style="border-radius: 12px; border: 1px solid #313d45;" />
+</p>
+
+### 💬 1-on-1 Direct Messaging & Real-Time Search
+WhatsApp-native dark aesthetic with custom doodle wallpaper, live online indicators, and instant keystroke search with keyword highlighting.
+
+<p align="center">
+  <img src="screenshots/chat-workspace.png" width="100%" alt="IrisChat 1-on-1 Direct Messaging" style="border-radius: 12px; border: 1px solid #313d45;" />
+</p>
+
+### 🤖 Intelligent AI Assistant & Code Highlighting
+Integrated AI chat assistant with multi-turn memory, formatted code blocks with syntax highlighting, and session history management.
+
+<p align="center">
+  <img src="screenshots/ai-assistant.png" width="100%" alt="IrisChat AI Assistant" style="border-radius: 12px; border: 1px solid #313d45;" />
+</p>
+
+### 👥 Group Rooms & Multi-User Collaboration
+Real-time group conversations with participant rosters, admin tools, and simultaneous Socket.IO message broadcasting.
+
+<p align="center">
+  <img src="screenshots/group-chat.png" width="100%" alt="IrisChat Group Rooms" style="border-radius: 12px; border: 1px solid #313d45;" />
+</p>
+
+---
+
 ## Key Features
 
 ### 💬 1-on-1 Direct Messaging
